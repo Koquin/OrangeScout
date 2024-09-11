@@ -22,7 +22,7 @@ public class TeamService {
         );
     }
 
-    public void deleteTeam (Long id){
+    public void deleteTeamById (Long id){
         if (!teamRepository.existsById(id)){
             throw new TeamNotFoundException("Team not found");
         }

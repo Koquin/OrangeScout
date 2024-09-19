@@ -1,12 +1,10 @@
 package com.orangescout.Orange.Scout.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.List;
 
+@Entity
 public class Team {
 
     @Id
@@ -19,6 +17,22 @@ public class Team {
 
     @OneToMany(mappedBy = "team")
     private List<Player> players;
+
+    public Long getId_team() {
+        return id_team;
+    }
+
+    public void setId_team(Long id_team) {
+        this.id_team = id_team;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
 
     public String getName_team() {
         return name_team;

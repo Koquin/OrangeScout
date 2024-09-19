@@ -2,6 +2,7 @@ package com.orangescout.Orange.Scout.model;
 
 import jakarta.persistence.*;
 
+@Entity
 public class Player {
 
     @Id
@@ -11,6 +12,14 @@ public class Player {
     @ManyToOne
     @JoinColumn(name = "id_team")
     private Team team;
+
+    public Long getId_player() {
+        return id_player;
+    }
+
+    public void setId_player(Long id_player) {
+        this.id_player = id_player;
+    }
 
     private String name_player;
     private int jersey_player;

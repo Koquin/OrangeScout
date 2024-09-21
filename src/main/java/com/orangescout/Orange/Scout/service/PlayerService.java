@@ -4,9 +4,11 @@ import com.orangescout.Orange.Scout.exception.PlayerNotFoundException;
 import com.orangescout.Orange.Scout.model.Player;
 import com.orangescout.Orange.Scout.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class PlayerService {
 
     @Autowired

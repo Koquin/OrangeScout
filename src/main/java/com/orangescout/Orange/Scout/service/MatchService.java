@@ -4,9 +4,11 @@ import com.orangescout.Orange.Scout.exception.MatchNotFoundException;
 import com.orangescout.Orange.Scout.model.Match;
 import com.orangescout.Orange.Scout.repository.MatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class MatchService {
 
     @Autowired

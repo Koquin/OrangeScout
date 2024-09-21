@@ -4,9 +4,11 @@ import com.orangescout.Orange.Scout.exception.StatsNotFoundException;
 import com.orangescout.Orange.Scout.model.Stats;
 import com.orangescout.Orange.Scout.repository.StatsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class StatsService {
 
     @Autowired

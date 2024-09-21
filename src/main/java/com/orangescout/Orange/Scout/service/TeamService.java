@@ -4,9 +4,11 @@ import com.orangescout.Orange.Scout.exception.TeamNotFoundException;
 import com.orangescout.Orange.Scout.model.Team;
 import com.orangescout.Orange.Scout.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class TeamService {
 
     @Autowired

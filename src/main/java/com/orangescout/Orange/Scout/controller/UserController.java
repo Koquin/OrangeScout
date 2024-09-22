@@ -3,6 +3,7 @@ package com.orangescout.Orange.Scout.controller;
 import com.orangescout.Orange.Scout.exception.EditUserException;
 import com.orangescout.Orange.Scout.exception.UserAlreadyExists;
 import com.orangescout.Orange.Scout.exception.UserNotFoundException;
+import com.orangescout.Orange.Scout.model.Match;
 import com.orangescout.Orange.Scout.model.User;
 import com.orangescout.Orange.Scout.repository.UserRepository;
 import com.orangescout.Orange.Scout.service.UserService;
@@ -60,6 +61,12 @@ public class UserController {
         }
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.GONE);
+    }
+
+    @PostMapping("/{userId}/matches")
+    public ResponseEntity<Match> addMatchToUser(@PathVariable Long userId, @RequestBody Match match) {
+        Match createdMatch = userService.addMatchToUser(userId, match);
+        return new ResponseEntity<>(createdMatch, HttpStatus.CREATED);
     }
 
 

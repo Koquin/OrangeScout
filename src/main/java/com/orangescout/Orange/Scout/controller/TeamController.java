@@ -1,8 +1,10 @@
 package com.orangescout.Orange.Scout.controller;
 
 import com.orangescout.Orange.Scout.exception.EditTeamException;
+import com.orangescout.Orange.Scout.exception.UserNotFoundException;
 import com.orangescout.Orange.Scout.model.Team;
 import com.orangescout.Orange.Scout.repository.TeamRepository;
+import com.orangescout.Orange.Scout.repository.UserRepository;
 import com.orangescout.Orange.Scout.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,9 @@ public class TeamController {
 
     @Autowired
     private TeamService teamService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private TeamRepository teamRepository;

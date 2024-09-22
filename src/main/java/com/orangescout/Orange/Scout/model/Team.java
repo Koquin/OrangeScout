@@ -18,6 +18,16 @@ public class Team {
     @OneToMany(mappedBy = "team")
     private List<Player> players;
 
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
+
+    @OneToMany(mappedBy = "teamOne")
+    private List<Match> matches;
+
+    @OneToMany(mappedBy = "teamTwo")
+    private List<Match> awayMatches;
+
     public Long getId_team() {
         return id_team;
     }

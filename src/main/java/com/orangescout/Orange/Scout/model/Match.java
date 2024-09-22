@@ -11,13 +11,17 @@ public class Match {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_match;
 
-    @OneToOne
-    @JoinColumn(name = "id_team")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_one_id", nullable = false)
     private Team teamOne;
 
-    @OneToOne
-    @JoinColumn(name = "id_team")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_two_id", nullable = false)
     private Team teamTwo;
+
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
 
     public Long getId_match() {
         return id_match;
@@ -70,4 +74,13 @@ public class Match {
     public void setTeam_two_score(int team_two_score) {
         this.team_two_score = team_two_score;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }

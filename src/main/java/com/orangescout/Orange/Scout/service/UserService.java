@@ -2,7 +2,9 @@ package com.orangescout.Orange.Scout.service;
 
 import com.orangescout.Orange.Scout.exception.UserAlreadyExists;
 import com.orangescout.Orange.Scout.exception.UserNotFoundException;
+import com.orangescout.Orange.Scout.model.Match;
 import com.orangescout.Orange.Scout.model.User;
+import com.orangescout.Orange.Scout.repository.MatchRepository;
 import com.orangescout.Orange.Scout.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +17,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private MatchRepository matchRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -44,5 +49,13 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(
                 () -> new UserNotFoundException("User not found")
         );
+    }
+
+    public Match addMatchToUser(Long userId, Match match) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        match.setUser(user);
+        return matchRepository.save(match);
     }
 }

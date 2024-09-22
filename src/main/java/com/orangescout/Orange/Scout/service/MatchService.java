@@ -2,6 +2,7 @@ package com.orangescout.Orange.Scout.service;
 
 import com.orangescout.Orange.Scout.exception.MatchNotFoundException;
 import com.orangescout.Orange.Scout.model.Match;
+import com.orangescout.Orange.Scout.model.User;
 import com.orangescout.Orange.Scout.repository.MatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,9 @@ public class MatchService {
             throw new MatchNotFoundException(("Match not found"));
         }
         matchRepository.deleteById(id);
+    }
+
+    public List<Match> getAllMatchesByUser(User user){
+        return matchRepository.findByUser(user);
     }
 }

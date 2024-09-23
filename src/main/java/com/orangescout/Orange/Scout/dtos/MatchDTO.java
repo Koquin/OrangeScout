@@ -1,10 +1,12 @@
 package com.orangescout.Orange.Scout.dtos;
 
+import java.time.LocalDate;
+
 public class MatchDTO {
         private Long matchId;
         private int teamOneScore;
         private int teamTwoScore;
-        private String matchDate;
+        private LocalDate matchDate;
         private TeamDTO teamOne;
         private TeamDTO teamTwo;
 
@@ -32,11 +34,11 @@ public class MatchDTO {
         this.teamTwoScore = teamTwoScore;
     }
 
-    public String getMatchDate() {
+    public LocalDate getMatchDate() {
         return matchDate;
     }
 
-    public void setMatchDate(String matchDate) {
+    public void setMatchDate(LocalDate matchDate) {
         this.matchDate = matchDate;
     }
 

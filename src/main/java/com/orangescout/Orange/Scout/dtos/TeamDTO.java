@@ -1,6 +1,6 @@
 package com.orangescout.Orange.Scout.dtos;
 
-class TeamDTO {
+public class TeamDTO {
     private String logoPath;
     private String abbreviation;
 

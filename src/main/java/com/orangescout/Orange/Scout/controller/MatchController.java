@@ -1,5 +1,6 @@
 package com.orangescout.Orange.Scout.controller;
 
+import com.orangescout.Orange.Scout.dtos.MatchDTO;
 import com.orangescout.Orange.Scout.exception.EditPlayerException;
 import com.orangescout.Orange.Scout.model.Match;
 import com.orangescout.Orange.Scout.model.Player;
@@ -35,10 +36,9 @@ public class MatchController {
         return new ResponseEntity<>(newMatch, HttpStatus.CREATED);
     }
 
-    @GetMapping("/match/{userId}")
-    public ResponseEntity<List<Match>> getAllMatchesByUser(@PathVariable Long id){
-        User user = userService.getUserById(id);
-        List<Match> matches = matchService.getAllMatchesByUser(user);
-        return new ResponseEntity<>(matches, HttpStatus.OK);
+    @GetMapping("/match/user/{userId}")
+    public ResponseEntity<List<MatchDTO>> getMatchesByUserId(@PathVariable Long userId) {
+        List<MatchDTO> matches = matchService.getMatchesByUserId(userId);
+        return ResponseEntity.ok(matches);
     }
 }

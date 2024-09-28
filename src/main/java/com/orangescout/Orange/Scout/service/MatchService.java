@@ -1,7 +1,7 @@
 package com.orangescout.Orange.Scout.service;
 
-import com.orangescout.Orange.Scout.dtos.MatchDTO;
-import com.orangescout.Orange.Scout.dtos.TeamDTO;
+import com.orangescout.Orange.Scout.dto.MatchDTO;
+import com.orangescout.Orange.Scout.dto.TeamDTO;
 import com.orangescout.Orange.Scout.exception.MatchNotFoundException;
 import com.orangescout.Orange.Scout.model.Match;
 import com.orangescout.Orange.Scout.model.User;

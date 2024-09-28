@@ -1,10 +1,7 @@
 package com.orangescout.Orange.Scout.controller;
 
-import com.orangescout.Orange.Scout.dtos.MatchDTO;
-import com.orangescout.Orange.Scout.exception.EditPlayerException;
+import com.orangescout.Orange.Scout.dto.MatchDTO;
 import com.orangescout.Orange.Scout.model.Match;
-import com.orangescout.Orange.Scout.model.Player;
-import com.orangescout.Orange.Scout.model.User;
 import com.orangescout.Orange.Scout.service.MatchService;
 import com.orangescout.Orange.Scout.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

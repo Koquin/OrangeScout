@@ -1,4 +1,4 @@
-package com.orangescout.Orange.Scout.dtos;
+package com.orangescout.Orange.Scout.dto;
 
 public class TeamDTO {
     private String logoPath;

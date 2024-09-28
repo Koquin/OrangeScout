@@ -1,7 +1,11 @@
 package com.orangescout.Orange.Scout.security;
 
+import com.orangescout.Orange.Scout.model.User;
 import io.jsonwebtoken.*;
 import org.springframework.stereotype.Component;
+
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +14,7 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    private static final String SECRET_KEY = System.getenv("JWT_SECRET_KEY");
+    private static final String SECRET_KEY = System.getenv("SECRET_KEY");
 
     // Extrai o username do token
     public String extractUsername(String token) {
@@ -28,18 +32,25 @@ public class JwtUtil {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+        return Jwts.parserBuilder() // Use parserBuilder() em vez de parser()
+                .setSigningKey(getSecretKey()) // Use getSecretKey() aqui
+                .build() // Construa o parser
+                .parseClaimsJws(token) // Analise o token
+                .getBody(); // Retorne o corpo das claims
     }
+
 
     private Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
     // Gera um novo token
-    public String generateToken(String username) {
+    public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, username);
+        // Adicione mais claims se necessário
+        return createToken(claims, user.getEmail()); // Aqui você pode usar o email ou qualquer outro identificador
     }
+
 
     private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
@@ -47,13 +58,17 @@ public class JwtUtil {
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // Token válido por 10 horas
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .signWith(getSecretKey(), SignatureAlgorithm.HS256) // Use a chave secreta aqui
                 .compact();
     }
 
-    // Valida o token
+
     public Boolean validateToken(String token, String username) {
         final String tokenUsername = extractUsername(token);
         return (tokenUsername.equals(username) && !isTokenExpired(token));
+    }
+
+    private SecretKey getSecretKey() {
+        return new SecretKeySpec(SECRET_KEY.getBytes(), SignatureAlgorithm.HS256.getJcaName());
     }
 }

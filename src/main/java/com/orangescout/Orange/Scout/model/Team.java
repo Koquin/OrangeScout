@@ -67,4 +67,28 @@ public class Team {
     public void setAbbr_team(String abbr_team) {
         this.abbr_team = abbr_team;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Match> getMatches() {
+        return matches;
+    }
+
+    public void setMatches(List<Match> matches) {
+        this.matches = matches;
+    }
+
+    public List<Match> getAwayMatches() {
+        return awayMatches;
+    }
+
+    public void setAwayMatches(List<Match> awayMatches) {
+        this.awayMatches = awayMatches;
+    }
 }

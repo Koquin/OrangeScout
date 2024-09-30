@@ -30,6 +30,7 @@ public class UserService {
         }
         String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
+        System.out.println("User name registered: " + user.getUsername());
         return userRepository.save(user);
 
     }

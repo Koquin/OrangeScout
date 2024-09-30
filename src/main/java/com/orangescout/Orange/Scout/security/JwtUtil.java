@@ -1,7 +1,10 @@
 package com.orangescout.Orange.Scout.security;
 
 import com.orangescout.Orange.Scout.model.User;
+import com.orangescout.Orange.Scout.repository.UserRepository;
 import io.jsonwebtoken.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -15,6 +18,9 @@ import java.util.function.Function;
 public class JwtUtil {
 
     private static final String SECRET_KEY = System.getenv("SECRET_KEY");
+
+    @Autowired
+    private UserRepository userRepository;
 
     // Extrai o username do token
     public String extractUsername(String token) {
@@ -63,10 +69,36 @@ public class JwtUtil {
     }
 
 
-    public Boolean validateToken(String token, String username) {
-        final String tokenUsername = extractUsername(token);
-        return (tokenUsername.equals(username) && !isTokenExpired(token));
+    public boolean validateToken(String token, MyUserDetails userDetails) {
+        try {
+            // Verifica a assinatura e a expiração
+            Jws<Claims> claims = Jwts.parserBuilder()
+                    .setSigningKey(getSecretKey()) // A mesma chave usada para assinar
+                    .build()
+                    .parseClaimsJws(token);
+
+            // Extraia o nome do usuário do token
+            String extractedUsername = claims.getBody().getSubject();
+            System.out.println("Subject:" +extractedUsername);
+
+            // Verifique se o nome extraído corresponde ao nome fornecido
+            if (!extractedUsername.equals(userDetails.getEmail())) {
+                System.out.println("A requisição veio até aqui ("+extractedUsername + ", "+userDetails.getEmail()+")");
+                return false; // O nome não corresponde
+            }
+
+            System.out.println("Chegou ate o return userRepository " + extractedUsername);
+            // Verifique se o usuário existe no banco de dados
+            return userRepository.existsByEmail(extractedUsername); // Supondo que você tenha esse método
+
+        } catch (JwtException e) {
+            // Log do erro
+            System.out.println("Invalid token: " + e.getMessage());
+            return false;
+        }
     }
+
+
 
     private SecretKey getSecretKey() {
         return new SecretKeySpec(SECRET_KEY.getBytes(), SignatureAlgorithm.HS256.getJcaName());

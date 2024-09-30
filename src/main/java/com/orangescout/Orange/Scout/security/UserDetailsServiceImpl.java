@@ -17,12 +17,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         @Override
-        public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        public MyUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
             // Busca o usuário pelo username (e.g., email)
             User user = userRepository.findByEmail(username)
-                    .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found with Email: " + username));
 
             // Converte o objeto User em UserDetails
+            System.out.println("O nome extraído do user: "+ user.getUsername());
             return new MyUserDetails(user);
         }
     }

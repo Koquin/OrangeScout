@@ -36,6 +36,7 @@ public class AuthController {
             User user = new User();
             user.setEmail(registerRequest.getEmail());
             user.setPassword(registerRequest.getPassword());
+            user.setUsername(registerRequest.getUsername());
             authenticationService.register(user);
             return new ResponseEntity<>("User successfully registered", HttpStatus.CREATED);
         } catch (RuntimeException e) {

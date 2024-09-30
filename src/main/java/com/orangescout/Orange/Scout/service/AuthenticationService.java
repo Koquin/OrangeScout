@@ -45,6 +45,7 @@ public class AuthenticationService {
         // Hash a senha antes de salvar
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
+        System.out.println("User name:" + user.getUsername());
         userRepository.save(user); // Salva o novo usuário no banco de dados
     }
 

@@ -32,25 +32,25 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (token != null && token.startsWith("Bearer ")) {
             token = token.substring(7); // Remove o "Bearer "
-            String username = jwtUtil.extractUsername(token);
+            String email = jwtUtil.extractUsername(token);
 
-            System.out.println("Extracted Username: " + username);
+            System.out.println("Extracted email: " + email);
 
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                MyUserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(username);
-                System.out.println("UserDetails loaded for: " + username);
+            if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                MyUserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(email);
+                System.out.println("UserDetails loaded for: " + email);
                 System.out.println("Username: " + userDetails.getEmail());
 
                 // Aqui você pode validar o token
                 if (jwtUtil.validateToken(token, userDetails)) {
-                    System.out.println("Token is valid. Authenticating user: " + username);
+                    System.out.println("Token is valid. Authenticating user: " + email);
 
                     // Autentica o usuário
                     UsernamePasswordAuthenticationToken authentication =
-                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                            new UsernamePasswordAuthenticationToken(userDetails.getEmail(), null, userDetails.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 } else {
-                    System.out.println("Invalid token for user: " + username);
+                    System.out.println("Invalid token for user: " + email);
                 }
             } else {
                 System.out.println("Username is null or authentication already exists.");

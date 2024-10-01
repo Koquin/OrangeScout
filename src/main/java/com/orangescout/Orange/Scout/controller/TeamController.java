@@ -44,12 +44,13 @@ public class TeamController {
     }
 
     @Autowired
-    private UserDetailsServiceImpl userDetailsService; // Injetar UserDetailsService
+    private UserDetailsServiceImpl userDetailsService;
 
     @PostMapping
-    public void createTeam(Team team) {
+    public void createTeam(@RequestBody Team team) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName(); // Obtém o email do usuário logado
+        System.out.println("Email: " + authentication.getName());
 
         MyUserDetails userDetails = (MyUserDetails) userDetailsService.loadUserByUsername(email);
         User user = userDetails.getUser(); // Obtém o User
@@ -57,7 +58,7 @@ public class TeamController {
         System.out.println("User:" + user);
 
         team.setUser(user); // Liga o time ao usuário
-        System.out.println(team.toString());
+        System.out.println(team.getId_team() + ", " + team.getAbbr_team() + ", " + team.getName_team() + ", " + team.getTeam_logo_path());
 
         // Salve o time no banco de dados
         teamRepository.save(team);

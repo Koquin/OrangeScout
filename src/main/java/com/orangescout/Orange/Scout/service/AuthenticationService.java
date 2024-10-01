@@ -37,16 +37,14 @@ public class AuthenticationService {
 
 
     public void register(User user) {
-        // Verifica se o usuário já existe
         Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
         if (existingUser.isPresent()) {
             throw new RuntimeException("Usuário já existe com esse email");
         }
-        // Hash a senha antes de salvar
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
         System.out.println("User name:" + user.getUsername());
-        userRepository.save(user); // Salva o novo usuário no banco de dados
+        userRepository.save(user);
     }
 
 }

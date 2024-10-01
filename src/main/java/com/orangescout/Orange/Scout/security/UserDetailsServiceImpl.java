@@ -18,13 +18,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         @Override
         public MyUserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-            // Busca o usuário pelo username (e.g., email)
             User user = userRepository.findByEmail(email)
                     .orElseThrow(() -> new UsernameNotFoundException("User not found with Email: " + email));
-
-            // Converte o objeto User em UserDetails
-            System.out.println("O email extraído do user: "+ user.getEmail());
-            System.out.println("O nome extraído do user: "+ user.getUsername());
             return new MyUserDetails(user);
         }
     }

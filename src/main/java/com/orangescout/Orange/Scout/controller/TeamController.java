@@ -39,7 +39,6 @@ public class TeamController {
     @GetMapping
     public ResponseEntity<List<Team>> getAllTeams (){
         List<Team> teams = teamService.getAllTeams();
-        System.out.println("Tentando criar time...");
         return new ResponseEntity<>(teams, HttpStatus.OK);
     }
 
@@ -49,18 +48,12 @@ public class TeamController {
     @PostMapping
     public void createTeam(@RequestBody Team team) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName(); // Obtém o email do usuário logado
-        System.out.println("Email: " + authentication.getName());
-
+        String email = authentication.getName();
         MyUserDetails userDetails = (MyUserDetails) userDetailsService.loadUserByUsername(email);
-        User user = userDetails.getUser(); // Obtém o User
-        System.out.println("User ID:" + user.getId_user());
-        System.out.println("User:" + user);
+        User user = userDetails.getUser();
 
-        team.setUser(user); // Liga o time ao usuário
-        System.out.println(team.getId_team() + ", " + team.getAbbr_team() + ", " + team.getName_team() + ", " + team.getTeam_logo_path());
+        team.setUser(user);
 
-        // Salve o time no banco de dados
         teamRepository.save(team);
     }
 

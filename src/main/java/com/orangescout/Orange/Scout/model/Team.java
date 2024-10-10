@@ -1,5 +1,8 @@
 package com.orangescout.Orange.Scout.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -15,7 +18,8 @@ public class Team {
     private String team_logo_path;
     private String abbr_team;
 
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Player> players;
 
     @ManyToOne

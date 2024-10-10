@@ -30,16 +30,6 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user){
-        try {
-            User saveUser = userService.registerUser(user);
-            return new ResponseEntity<>(user, HttpStatus.CREATED);
-        } catch (UserAlreadyExists e){
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
-    }
-
     @PutMapping("/user/{id}")
     public ResponseEntity<User> editUser(@RequestBody User user, @PathVariable Long id){
         try {
@@ -54,7 +44,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<User> deleteUser(@PathVariable Long id){
         if (!userRepository.existsById(id)){
             throw new UserNotFoundException("User not found");
@@ -62,12 +52,4 @@ public class UserController {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.GONE);
     }
-
-    @PostMapping("/{userId}/matches")
-    public ResponseEntity<Match> addMatchToUser(@PathVariable Long userId, @RequestBody Match match) {
-        Match createdMatch = userService.addMatchToUser(userId, match);
-        return new ResponseEntity<>(createdMatch, HttpStatus.CREATED);
-    }
-
-
 }

@@ -42,6 +42,12 @@ public class TeamController {
         return new ResponseEntity<>(teams, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Team> getTeamById(@PathVariable Long id){
+        Team teamGet = teamService.getTeamById(id);
+        return new ResponseEntity<>(teamGet, HttpStatus.OK);
+    }
+
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
@@ -58,7 +64,7 @@ public class TeamController {
     }
 
 
-    @PutMapping("/team/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<Team> editTeam(@RequestBody Team team, @PathVariable Long id){
         try {
             Team editedTeam = teamService.getTeamById(id);
@@ -72,7 +78,7 @@ public class TeamController {
         }
     }
 
-    @DeleteMapping("/team/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteTeam(@PathVariable Long id){
         if (teamRepository.existsById(id)){
             teamService.deleteTeamById(id);

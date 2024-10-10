@@ -2,8 +2,10 @@ package com.orangescout.Orange.Scout.controller;
 
 import com.orangescout.Orange.Scout.exception.EditPlayerException;
 import com.orangescout.Orange.Scout.model.Player;
+import com.orangescout.Orange.Scout.model.Team;
 import com.orangescout.Orange.Scout.repository.PlayerRepository;
 import com.orangescout.Orange.Scout.service.PlayerService;
+import com.orangescout.Orange.Scout.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,9 @@ public class PlayerController {
     private PlayerService playerService;
 
     @Autowired
+    private TeamService teamService;
+
+    @Autowired
     private PlayerRepository playerRepository;
 
     @GetMapping
@@ -27,13 +32,15 @@ public class PlayerController {
         return new ResponseEntity<>(players, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<Player> createPlayer(@RequestBody Player player){
-        Player newPlayer = playerService.savePlayer(player);
-        return new ResponseEntity<>(newPlayer, HttpStatus.CREATED);
+    @PostMapping("{idTeam}")
+    public ResponseEntity<Player> createPlayer(@RequestBody Player player, @PathVariable Long idTeam){
+        Team playerTeam = teamService.getTeamById(idTeam);
+        player.setTeam(playerTeam);
+        playerService.savePlayer(player);
+        return new ResponseEntity<>(player, HttpStatus.CREATED);
     }
 
-    @PutMapping("/player/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<Player> editPlayer (@RequestBody Player player, @PathVariable Long id){
         try {
             Player editedPlayer = playerService.getPlayerById(id);
@@ -46,7 +53,7 @@ public class PlayerController {
         }
     }
 
-    @DeleteMapping("/player/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Void> deletePlayer(@PathVariable Long id){
         if (!playerRepository.existsById(id)){
             return ResponseEntity.noContent().build();
@@ -55,5 +62,4 @@ public class PlayerController {
             return ResponseEntity.notFound().build();
         }
     }
-
 }

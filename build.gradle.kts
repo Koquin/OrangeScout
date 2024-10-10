@@ -32,6 +32,7 @@ dependencies {
 	runtimeOnly ("io.jsonwebtoken:jjwt-impl:0.11.5")
 	runtimeOnly ("io.jsonwebtoken:jjwt-jackson:0.11.5")
 	compileOnly ("javax.servlet:servlet-api:3.0-alpha-1")
+	implementation ("com.fasterxml.jackson.core:jackson-databind:2.15.2")
 
 }
 

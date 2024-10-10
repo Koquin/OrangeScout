@@ -23,6 +23,10 @@ public class Match {
     @JoinColumn(name = "id_user")
     private User user;
 
+    private int team_one_score;
+    private int team_two_score;
+    private LocalDate date_match;
+
     public Long getId_match() {
         return id_match;
     }
@@ -30,10 +34,6 @@ public class Match {
     public void setId_match(Long id_match) {
         this.id_match = id_match;
     }
-
-    private int team_one_score;
-    private int team_two_score;
-    private LocalDate date_match;
 
     public Team getTeamOne() {
         return teamOne;
